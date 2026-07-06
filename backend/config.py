@@ -2,7 +2,7 @@
 
 from functools import lru_cache
 from pathlib import Path
-from typing import List
+from typing import List, Any
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -48,7 +48,7 @@ class Settings(BaseSettings):
     RERANK_TOP_K: int = 5
 
     # CORS
-    CORS_ORIGINS: List[str] = ["http://localhost:5173", "http://localhost:3000"]
+    CORS_ORIGINS: Any = ["http://localhost:5173", "http://localhost:3000"]
 
     # File upload
     MAX_UPLOAD_SIZE_MB: int = 50
