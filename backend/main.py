@@ -33,10 +33,20 @@ def create_app() -> FastAPI:
         redoc_url="/redoc",
     )
 
+    origins = settings.CORS_ORIGINS
+    if isinstance(origins, str):
+        import json
+        try:
+            origins = json.loads(origins)
+        except Exception:
+            origins = [o.strip() for o in origins.split(",") if o.strip()]
+
+    allow_all = "*" in origins or not origins
+
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.CORS_ORIGINS,
-        allow_credentials=True,
+        allow_origins=["*"] if allow_all else origins,
+        allow_credentials=not allow_all,
         allow_methods=["*"],
         allow_headers=["*"],
     )
